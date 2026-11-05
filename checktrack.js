@@ -1,48 +1,67 @@
-import {readFileSync, existsSync} from "fs"
+import {readFileSync, existsSync, readdirSync} from "fs"
 import {join, dirname} from "path"
 import {homedir, hostname} from "os"
 import {fileURLToPath} from "url"
-
-console.log(homedir());//C:\Users\WebForce3
-console.log(hostname());//DESKTOP-PKPOC80
-console.log(import.meta.url);//file:///C:/Users/WebForce3/AdaTech/ada-tech/bloc1/projets/trackada/checktrack.js
-console.log(fileURLToPath(import.meta.url));//C:\Users\WebForce3\AdaTech\ada-tech\bloc1\projets\trackada\checktrack.js
-
 
 //Charger et parser le fichier track.json
 const transformJSON = (fichier, encodage) => {
     const data = readFileSync(fichier, encodage);
     console.log(JSON.parse(data));
 } 
-transformJSON("track.json", "utf-8");
+const trackTabProjects = transformJSON("track.json", "utf-8");
 
-// Vérifier que le dossier~/ada-tech/bloc1/projetsexiste. S'il n'existe pas, afficher l'erreur et arrêter le script
+// Vérifier que le dossier~/ada-tech/bloc1/projets existe. S'il n'existe pas, afficher l'erreur et arrêter le script
 const existFOLDER = (path) => {
     const exist = existsSync(path);
     if (exist) {
-        console.log(`✅ Dossier ${path.split("\\").pop()}`);
+        console.log(`✅ Dossier ${path.split("\\").pop()}\n`);
     }else{
-        console.log(`❌Dossier ${path.split("\\").pop()}`);
+        console.log(`❌Dossier ${path.split("\\").pop()}\n`);
     }
 }
 existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets"));
+existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapage"));
+const pathProjects = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets");
 
-const pathProject = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets");
+const pathTrackada = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "trackada");
+const requireTrackada = ["checktrack.js", "track.json", "package.json", "README.md"];
 
-const checkPROJECT = (folderProjects, name) => {
-    const way = join(folderProjects, name)
-    const existing  = existsSync(way)
-    const gitOk   = existsSync(join(way, ".git"))
-    // return { existing, gitOk }
-    if(existing && gitOk){
-        console.log(`✅ Dossier du ${folderProjects.split("\\").pop()} ${name}`);
-    }else if(name != existing){
-        console.log(`❌ Dossier du ${folderProjects.split("\\").pop()} \n - Le dossier ${name} n'existe pas ou n'est pas nommé correctement`);
-    }else if(gitOk === "false"){
-        console.log(`- le repository git n'est pas initialisé`);
-    }else{
-        console.log(`- il manque <fichiers manquants>`);
+const pathAdapage = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapage");
+const requireAdapage = ["index.html", "style.css", "README.md"];
+
+const pathAdaquiz = join(homedir(), "AdaTech", "ada-tech", "bloc1",
+"projets", "adaquiz");
+const requireAdaquiz = ["index.html", "style.css", "script.js", "questions.js", "README.md"];
+
+
+const pathAdalgo = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adalgo");
+const requireAdalgo = ["package.json", "README.md"];
+
+
+const pathadAtaviz = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adataviz");
+const requireAdataviz = ["index.html", "package.json", "README.md"];
+
+
+const pathadAtabase = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adatabase");
+const requireAdatabase = ["package.json", "README.md"];
+
+
+const pathAdapi = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapi");
+const requireAdapi = ["package.json", "README.md"];
+
+const checkPROJECT = (folderProjects, require) =>{
+    const missing = require.filter((file) => !existsSync(join(folderProjects, file)))
+
+    if (missing.length === 0) {
+        console.log("✅ tous les fichiers sont présents \n")
+    } else {
+        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}`)
+        missing.forEach((file) => console.log(` - il manque ${file}`))
     }
 }
+checkPROJECT(pathAdapi, requireAdapi);
+readdirSync(pathProjects).forEach((project) => {
+    
+   
+ });
 
-console.log(checkPROJECT(pathProject, "trackad"));
