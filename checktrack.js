@@ -20,9 +20,29 @@ transformJSON("track.json", "utf-8");
 const existFOLDER = (path) => {
     const exist = existsSync(path);
     if (exist) {
-        console.log("✅ Le dossier existe");
+        console.log(`✅ Dossier ${path.split("\\").pop()}`);
     }else{
-        console.log("❌ Le dossier n'existe pas");
+        console.log(`❌Dossier ${path.split("\\").pop()}`);
     }
 }
 existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets"));
+
+const pathProject = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets");
+
+const checkPROJECT = (folderProjects, name) => {
+    const way = join(folderProjects, name)
+    const existing  = existsSync(way)
+    const gitOk   = existsSync(join(way, ".git"))
+    // return { existing, gitOk }
+    if(existing && gitOk){
+        console.log(`✅ Dossier du ${folderProjects.split("\\").pop()} ${name}`);
+    }else if(name != existing){
+        console.log(`❌ Dossier du ${folderProjects.split("\\").pop()} \n - Le dossier ${name} n'existe pas ou n'est pas nommé correctement`);
+    }else if(gitOk === "false"){
+        console.log(`- le repository git n'est pas initialisé`);
+    }else{
+        console.log(`- il manque <fichiers manquants>`);
+    }
+}
+
+console.log(checkPROJECT(pathProject, "trackad"));
