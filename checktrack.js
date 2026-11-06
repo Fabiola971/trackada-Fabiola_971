@@ -87,7 +87,6 @@ const checkPROJECT = (folderProjects, require) =>{
                                 }
 }
 
-
 existFOLDER(pathProjects);
 checkPROJECT(pathAdapage, requireAdapage);
 checkPROJECT(pathAdaquiz, requireAdaquiz);
@@ -96,6 +95,12 @@ checkPROJECT(pathAdalgo, requireAdalgo);
 checkPROJECT(pathAdataviz, requireAdataviz);
 checkPROJECT(pathadAtabase, requireAdatabase);
 checkPROJECT(pathAdapi, requireAdapi);
+
+const calculPercentage = (full, total) =>  {
+    const result = Math.round((full/total)*100) + "%"
+   console.log(result); 
+}
+calculPercentage(fullProjects, totalProjects)
 console.log(`Total projets: ${totalProjects}\n Projets complet: ${fullProjects}`)
 
 
