@@ -51,9 +51,10 @@ const pathAdapi = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "ad
 const requireAdapi = ["package.json", "README.md"];
 
 
-
+let totalProjects = 0;
+let fullProjects = 0;
 const checkPROJECT = (folderProjects, require) =>{
-    // existFOLDER(pathProjects);
+    totalProjects++;
     const missing = require.filter((file) => !existsSync(join(folderProjects, file)));
     
     const gitOk = existsSync(join(folderProjects, ".git"));
@@ -61,7 +62,8 @@ const checkPROJECT = (folderProjects, require) =>{
         console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- le dossier n'existe pas ou n'est pas nommé correctement`);
     }else 
         if ((missing.length === 0) && (gitOk)){
-        console.log(`✅ Dossier ${folderProjects.split("\\").pop()}\n`);
+            fullProjects++;
+            console.log(`✅ Dossier ${folderProjects.split("\\").pop()}\n`);
         }else 
             if((missing.length === 1) && (gitOk)){
                 console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- il manque ${missing}\n`);
@@ -94,6 +96,7 @@ checkPROJECT(pathAdalgo, requireAdalgo);
 checkPROJECT(pathAdataviz, requireAdataviz);
 checkPROJECT(pathadAtabase, requireAdatabase);
 checkPROJECT(pathAdapi, requireAdapi);
+console.log(`Total projets: ${totalProjects}\n Projets complet: ${fullProjects}`)
 
 
     
