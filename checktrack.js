@@ -97,11 +97,15 @@ checkPROJECT(pathadAtabase, requireAdatabase);
 checkPROJECT(pathAdapi, requireAdapi);
 
 const calculPercentage = (full, total) =>  {
-    const result = Math.round((full/total)*100) + "%"
-   console.log(result); 
+    const result = Math.round((full/total)*100);
+   console.log(result);
+   if(result === 100){
+        console.log(`✅ ${result}% des projets sont initialisés correctement (${full}/${total})`)
+   }else{
+        console.log(`❌ ${result}% des projets sont initialisés correctement (${full}/${total})`)
+   }
 }
-calculPercentage(fullProjects, totalProjects)
-console.log(`Total projets: ${totalProjects}\n Projets complet: ${fullProjects}`)
+calculPercentage(fullProjects, totalProjects);
 
 
     
