@@ -19,8 +19,9 @@ const existFOLDER = (path) => {
         console.log(`❌Dossier ${path.split("\\").pop()}\n`);
     }
 }
+// Folder project exist
 existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets"));
-existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapage"));
+// Creation path project's variable 
 const pathProjects = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets");
 
 const pathTrackada = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "trackada");
@@ -28,6 +29,7 @@ const requireTrackada = ["checktrack.js", "track.json", "package.json", "README.
 
 const pathAdapage = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapage");
 const requireAdapage = ["index.html", "style.css", "README.md"];
+
 
 const pathAdaquiz = join(homedir(), "AdaTech", "ada-tech", "bloc1",
 "projets", "adaquiz");
@@ -51,13 +53,20 @@ const requireAdapi = ["package.json", "README.md"];
 
 const checkPROJECT = (folderProjects, require) =>{
     const missing = require.filter((file) => !existsSync(join(folderProjects, file)))
-
+    
     if (missing.length === 0) {
         console.log("✅ tous les fichiers sont présents \n")
-    } else {
-        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}`)
-        missing.forEach((file) => console.log(` - il manque ${file}`))
+    } else if(missing.length === 1){
+        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}` )
+    }else if(missing.length === 2){
+        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}, ${missing[1]}.` )
+    }else if(missing.length === 3){
+        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}, ${missing[1]} et ${missing[2]}.` )
     }
+}
+
+const printResult = (result) =>{
+    console.log(``);
 }
 checkPROJECT(pathAdapi, requireAdapi);
 readdirSync(pathProjects).forEach((project) => {
