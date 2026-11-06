@@ -11,36 +11,35 @@ const transformJSON = (fichier, encodage) => {
 const trackTabProjects = transformJSON("track.json", "utf-8");
 
 // Vérifier que le dossier~/ada-tech/bloc1/projets existe. S'il n'existe pas, afficher l'erreur et arrêter le script
+
+// Function Folder project exist
 const existFOLDER = (path) => {
     const exist = existsSync(path);
     if (exist) {
         console.log(`✅ Dossier ${path.split("\\").pop()}\n`);
     }else{
-        console.log(`❌Dossier ${path.split("\\").pop()}\n`);
+        console.log(`❌ Dossier ${path.split("\\").pop()} n'existe pas.\n`);
     }
 }
-// Folder project exist
-existFOLDER(join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets"));
+
 // Creation path project's variable 
 const pathProjects = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets");
 
-const pathTrackada = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "trackada");
-const requireTrackada = ["checktrack.js", "track.json", "package.json", "README.md"];
-
 const pathAdapage = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapage");
 const requireAdapage = ["index.html", "style.css", "README.md"];
-
 
 const pathAdaquiz = join(homedir(), "AdaTech", "ada-tech", "bloc1",
 "projets", "adaquiz");
 const requireAdaquiz = ["index.html", "style.css", "script.js", "questions.js", "README.md"];
 
+const pathTrackada = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "trackada");
+const requireTrackada = ["checktrack.js", "track.json", "package.json", "README.md"];
 
 const pathAdalgo = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adalgo");
 const requireAdalgo = ["package.json", "README.md"];
 
 
-const pathadAtaviz = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adataviz");
+const pathAdataviz = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adataviz");
 const requireAdataviz = ["index.html", "package.json", "README.md"];
 
 
@@ -51,26 +50,56 @@ const requireAdatabase = ["package.json", "README.md"];
 const pathAdapi = join(homedir(), "AdaTech", "ada-tech", "bloc1", "projets", "adapi");
 const requireAdapi = ["package.json", "README.md"];
 
+
+
 const checkPROJECT = (folderProjects, require) =>{
-    const missing = require.filter((file) => !existsSync(join(folderProjects, file)))
+    // existFOLDER(pathProjects);
+    const missing = require.filter((file) => !existsSync(join(folderProjects, file)));
     
-    if (missing.length === 0) {
-        console.log("✅ tous les fichiers sont présents \n")
-    } else if(missing.length === 1){
-        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}` )
-    }else if(missing.length === 2){
-        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}, ${missing[1]}.` )
-    }else if(missing.length === 3){
-        console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n - il manque ${missing[0]}, ${missing[1]} et ${missing[2]}.` )
-    }
+    const gitOk = existsSync(join(folderProjects, ".git"));
+    if(!folderProjects){
+        console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- le dossier n'existe pas ou n'est pas nommé correctement`);
+    }else 
+        if ((missing.length === 0) && (gitOk)){
+        console.log(`✅ Dossier ${folderProjects.split("\\").pop()}\n`);
+        }else 
+            if((missing.length === 1) && (gitOk)){
+                console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- il manque ${missing}\n`);
+            }else 
+                if((missing.length === 2) && (gitOk)){
+                    console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- il manque ${missing}\n- il manque ${missing[0]}, ${missing[1]}.\n`);
+                }else 
+                    if((missing.length === 3) && (gitOk)){
+                        console.log(`❌ dossier du projet ${folderProjects.split("\\").pop()}\n- il manque ${missing}\n- il manque ${missing[0]}, ${missing[1]} et ${missing[2]}.\n`);
+                    }else
+                        if((missing.length === 1) && (!gitOk)){
+                            console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n- le repository git n'est pas initialisé\n- il manque ${missing[0]}\n`); 
+                        }else 
+                            if ((missing.length === 2) && (!gitOk)){
+                                console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n- le repository n'est pas initialisé \n- il manque ${missing[0]}, ${missing[1]}.\n` );
+                            }else
+                                if((missing.length === 3) && (!gitOk)){
+                                    console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n- le repository n'est pas initialisé\n- il manque ${missing[0]}, ${missing[1]} et ${missing[2]}.\n`);
+                                }else{
+                                    console.log(`❌ Dossier ${folderProjects.split("\\").pop()}\n `);
+                                }
 }
 
-const printResult = (result) =>{
-    console.log(``);
-}
+
+existFOLDER(pathProjects);
+checkPROJECT(pathAdapage, requireAdapage);
+checkPROJECT(pathAdaquiz, requireAdaquiz);
+checkPROJECT(pathTrackada, requireTrackada);
+checkPROJECT(pathAdalgo, requireAdalgo);
+checkPROJECT(pathAdataviz, requireAdataviz);
+checkPROJECT(pathadAtabase, requireAdatabase);
 checkPROJECT(pathAdapi, requireAdapi);
-readdirSync(pathProjects).forEach((project) => {
+
+
     
-   
- });
+
+
+
+
+
 
